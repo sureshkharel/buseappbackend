@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const productRoutes = express.Router();
+const defaultRoutes = express.Router();
 const PORT = process.env.PORT || 4000;
 const connectionString = process.env.CS;
 //load the mongodb schema
@@ -23,6 +24,9 @@ connection.once('open', function(){
     console.log("connection established");
 })
 
+defaultRoutes.route('/').get(function(req, res){
+    res.send("back is up");
+});
 productRoutes.route('/').get(function(req, res){
     Product.find(function(err, product){
         if(err) {
@@ -74,11 +78,10 @@ productRoutes.route('/update/:id').post(function(req, res){
 
     });
 });
-app.use('/', function (req, res) {
-    res.status(200).send("Hello this is API");
-  });
+app.use('/', defaultRoutes);
 // api hit point
 app.use('/api/products', productRoutes);
+
 app.listen(PORT, function(){
     console.log("server is running on Port: " + PORT);
 });
