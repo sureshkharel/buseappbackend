@@ -16,6 +16,6 @@
     },
     "scripts": {
         "start": "node server.js",
-        "build": "pm2 start server.js --name server && pm2 start server"
+		"build": "pm2 kill && pm2 start server.js --name app"
     }
 }
